@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .container {
+      margin: auto;
+      border: 2px solid grey;
+      background-color: black;
+      color: white;
+      border-radius: 30px;
+      padding: 20px;
+      width: 40%;
+      height: 40vh;
+    }
+    p {
+      font-size: 20px;
+    }
+    .btn {
+      display: flex;
+      flex-direction: row;
+    }
+    button {
+      height: 30px;
+      background-color: white;
+      color: black;
+      width: 120px;
+      margin: 15px;
+    }
+    button:hover {
+      background: #000;
+      color: white;
+    }
+    @media (max-width: 800px) {
+      .btn {
+        display: flex;
+        flex-direction: column;
+      }
+      .container {
+        width: 80%;
+        height: 60vh;
+      }
+      h1,
+      h2 {
+        font-size: 23px;
+      }
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Private counter Game</h1>
+      <p>User1: <span id="user1">0</span></p>
+      <p>User2: <span id="user2">0</span></p>
+      <h2 id="winStatus"></h2>
+      <div class="btn">
+        <button onclick="handleIncreament(`1`)">User1</button>
+        <button onclick="handleIncreament(`2`)">User2</button>
+        <button onclick="handleIncreament(`0`)">ResetGame</button>
+      </div>
+    </div>
+    <script>
+      function PrivateCounter() {
+        let counter1 = 0;
+        let counter2 = 0;
+        // console.log(this);
+        this.increament1 = function () {
+          counter1++;
+          counter2--;
+          this.updateCount();
+          this.winStatus();
+        };
+        this.increament2 = function () {
+          counter2++;
+          counter1--;
+          this.updateCount();
+          this.winStatus();
+        };
+
+        this.winStatus = function () {
+          if (counter1 >= 10) {
+            document.getElementById(
+              "winStatus"
+            ).innerText = `Congratulation,User1 has won`;
+          } else if (counter2 >= 10) {
+            document.getElementById(
+              "winStatus"
+            ).innerText = `Congratulation,User2 has won`;
+          } else {
+          }
+        };
+
+        this.updateCount = function () {
+          document.getElementById("user1").innerText = counter1;
+          document.getElementById("user2").innerText = counter2;
+        };
+        this.resetCounter = function () {
+          document.getElementById("user1").innerText = 0;
+          document.getElementById("user2").innerText = 0;
+        };
+
+        this.resetAll = function () {
+          document.getElementById("winStatus").innerText = ``;
+          counter1 = 0;
+          counter2 = 0;
+          this.updateCount();
+        };
+      }
+
+      let counter = new PrivateCounter(); //Invoking a constructor function
+
+      function handleIncreament(value) {
+        if (value === `1`) {
+          counter.increament1();
+        } else if (value === `2`) {
+          counter.increament2();
+        } else {
+          counter.resetAll();
+        }
+      }
+    </script>
+  </body>
+</html>
